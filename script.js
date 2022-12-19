@@ -13,6 +13,7 @@ const Main = {
         this.$inputState = document.querySelector('#state')
         this.$inputNumber = document.querySelector('#number')
         this.$spanError = document.querySelector('#spanError')
+        this.$allInputs = document.querySelectorAll('.data')
 
     },
 
@@ -58,10 +59,9 @@ const Main = {
         atualizaDados: obj => {
 
             if(!obj){
-                Main.$inputStreet.value = ''
-                Main.$inputCity.value = ''
-                Main.$inputState.value = ''
-                Main.$inputNumber.value = ''
+                Main.$allInputs.forEach((e) => {
+                    e.value = ''
+                })
                 Main.$spanError.classList.add('erro')
             } else {
                 Main.$inputStreet.value = obj.logradouro
