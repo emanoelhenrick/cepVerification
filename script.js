@@ -38,29 +38,38 @@ const Main = {
         cepRequisition: () => {
             fetch(`https://viacep.com.br/ws/${Main.cepNumber}/json/`)
                 .then(response => response.json())
-                .then(Main.EventsFn.atualizaDados)
+                .then(Main.EventsFn.verificaDados)
                 .catch(Main.EventsFn.erroSpan)
         },
 
-        atualizaDados: (obj) => {
+        verificaDados: (obj) => {
 
             if(obj.erro){
                 reject()
             }
 
-            Main.$inputStreet.value = obj.logradouro
-            Main.$inputCity.value = obj.localidade
-            Main.$inputState.value = obj.uf
-            Main.$inputNumber.value = obj.ddd
-            Main.$spanError.classList.remove('erro')
+            Main.EventsFn.atualizaDados(obj)
         },
 
         erroSpan: () => {
-            Main.$inputStreet.value = ''
-            Main.$inputCity.value = ''
-            Main.$inputState.value = ''
-            Main.$inputNumber.value = ''
-            Main.$spanError.classList.add('erro')
+            Main.EventsFn.atualizaDados('')
+        },
+
+        atualizaDados: obj => {
+
+            if(!obj){
+                Main.$inputStreet.value = ''
+                Main.$inputCity.value = ''
+                Main.$inputState.value = ''
+                Main.$inputNumber.value = ''
+                Main.$spanError.classList.add('erro')
+            } else {
+                Main.$inputStreet.value = obj.logradouro
+                Main.$inputCity.value = obj.localidade
+                Main.$inputState.value = obj.uf
+                Main.$inputNumber.value = obj.ddd
+                Main.$spanError.classList.remove('erro')
+            }
         }
     }
 }
